@@ -40,18 +40,6 @@ switch ($action) {
             $controller = new AdminController($db);
             $controller->viewAllProducts();
             break;
-        case 'update_product':
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $controller = new AdminController($db);
-                    $controller->updateProduct();
-                } else {
-                    // Display the update product form
-                    $productId = intval($_GET['id']);
-                    $controller = new AdminController($db);
-                    $product = $controller->fetchOneProduct($productId);
-                    include '../E_Commerce/views/update_product.php';
-                }
-                break;
         
         case 'delete_product':
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -59,7 +47,16 @@ switch ($action) {
                     $controller->deleteProduct();
                 }
                 break;
-
+            case 'show_update_form':
+                    $controller = new AdminController($db);
+                    $controller->showUpdateForm();
+                    break;
+            case 'update_product':
+                        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                            $controller = new AdminController($db);
+                            $controller->updateProduct();
+                        }
+                        break;
     case 'view_orders':
         $controller = new AdminController($db);
         $controller->viewOrders();

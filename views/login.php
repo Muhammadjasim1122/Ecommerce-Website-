@@ -25,7 +25,7 @@
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
         <br>
-        <a href="/E_Commerce/views/signup.php?action=signup">Don't have an account? Sign up here.</a>
+        <a href="/E_Commerce/routes.php?action=signup">Don't have an account? Sign up here.</a>
     </div>
 </body>
 </html>

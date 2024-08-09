@@ -1,7 +1,6 @@
 <?php
 require_once '../E_Commerce/models/ProductModel.php';
 require_once '../E_Commerce/views/Product_list.php';
-require_once '../E_Commerce/views/update_product.php';
 
 
 
@@ -50,26 +49,35 @@ class AdminController {
     public function viewOrders() {
         // Implement viewOrders method to display orders
     }
-
-
-   
-    public function fetchProduct($id) {
-        return $this->productModel->fetchProduct($id); // Fetch product from the database
-    }
-    
     public function updateProduct() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Handle POST request
-            // Update product logic here
+        $product_id = $_POST['id'];
+        $name = $_POST['name'];
+        $price = $_POST['price'];
+        $quantity = $_POST['quantity'];
+        $image = $_FILES['image']['name'];
+        $target = "../E_Commerce/" . basename($image);
+    
+        // Update only if a new image is uploaded
+        if (!empty($image)) {
+            move_uploaded_file($_FILES['image']['tmp_name'], $target);
         } else {
-            // Handle GET request
-            $id = intval($_GET['id']);
-            $product = $this->fetchProduct($id);
-            include '../E_Commerce/views/update_product.php'; // Pass product data to the view
+            // If no new image, keep the old image
+            $existingProduct = $this->productModel->getProductById($product_id);
+            $image = $existingProduct['image'];
         }
+    
+        if ($this->productModel->updateProduct($product_id, $name, $price, $quantity, $image)) {
+            $_SESSION['message'] = "Product updated successfully!";
+        } else {
+            $_SESSION['message'] = "Failed to update product.";
+        }
+    
+        header("Location: /E_Commerce/routes.php?action=view_all_products");
+        exit();
     }
    
-    
+   
+   
     public function deleteProduct() {
         $product_id = $_POST['id'];
         if ($this->productModel->deleteProduct($product_id)) {

@@ -51,15 +51,28 @@ class ProductModel {
         $stmt->bindParam(':product_id', $product_id);
         return $stmt->execute();
     }
-public function update($name, $price, $quantity, $image, $id) {
-    $query = "UPDATE " . $this->table_name . " SET name = :name, price = :price, quantity = :quantity, image = :image WHERE id = :id";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':price', $price);
-    $stmt->bindParam(':quantity', $quantity);
-    $stmt->bindParam(':image', $image);
-    $stmt->bindParam(':id', $id);
-    return $stmt->execute();
+    public function updateProduct($product_id, $name, $price, $quantity, $image) {
+        $query = "UPDATE " . $this->table_name . " SET name = :name, price = :price, quantity = :quantity, image = :image WHERE id = :product_id";
+        $stmt = $this->conn->prepare($query);
+
+        // Bind parameters
+        $stmt->bindParam(':product_id', $product_id);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':quantity', $quantity);
+        $stmt->bindParam(':image', $image);
+
+        return $stmt->execute();
+    }
+
+    public function getProductById($product_id) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :product_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':product_id', $product_id);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
-}
+
 ?>
