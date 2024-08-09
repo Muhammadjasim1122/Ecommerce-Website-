@@ -51,15 +51,15 @@ class ProductModel {
         $stmt->bindParam(':product_id', $product_id);
         return $stmt->execute();
     }
-    public function update($name, $price, $quantity, $image, $id) {
-        $query = "UPDATE " . $this->table_name . " SET name = :name, price = :price, quantity = :quantity, image = :image WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':price', $price);
-        $stmt->bindParam(':quantity', $quantity);
-        $stmt->bindParam(':image', $image);
-        $stmt->bindParam(':id', $id);
-        return $stmt->execute();
-    }
+public function update($name, $price, $quantity, $image, $id) {
+    $query = "UPDATE " . $this->table_name . " SET name = :name, price = :price, quantity = :quantity, image = :image WHERE id = :id";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':price', $price);
+    $stmt->bindParam(':quantity', $quantity);
+    $stmt->bindParam(':image', $image);
+    $stmt->bindParam(':id', $id);
+    return $stmt->execute();
+}
 }
 ?>

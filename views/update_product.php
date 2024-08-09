@@ -1,21 +1,10 @@
 <?php
-// Initialize variables
-$productImage = '';
-
-// Assume $product contains the product data fetched from the database
-if (isset($product)) {
-    $productId = isset($product['id']) ? htmlspecialchars($product['id']) : '';
-    $productName = isset($product['name']) ? htmlspecialchars($product['name']) : '';
-    $productPrice = isset($product['price']) ? htmlspecialchars($product['price']) : '';
-    $productQuantity = isset($product['quantity']) ? htmlspecialchars($product['quantity']) : '';
-    $productImage = isset($product['image']) ? htmlspecialchars($product['image']) : '';
-} else {
-    $productId = '';
-    $productName = '';
-    $productPrice = '';
-    $productQuantity = '';
-    $productImage = '';
-}
+// Ensure $product is set and contains data
+$productId = isset($product['id']) ? htmlspecialchars($product['id']) : '';
+$productName = isset($product['name']) ? htmlspecialchars($product['name']) : '';
+$productPrice = isset($product['price']) ? htmlspecialchars($product['price']) : '';
+$productQuantity = isset($product['quantity']) ? htmlspecialchars($product['quantity']) : '';
+$productImage = isset($product['image']) ? htmlspecialchars($product['image']) : '';
 ?>
 
 <!DOCTYPE html>
