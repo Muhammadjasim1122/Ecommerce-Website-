@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-class UserModel {
+class userModel {
     private $conn;
     private $table_name = "users"; // Updated to 'users'
 
@@ -10,12 +10,12 @@ class UserModel {
         $this->conn = $db;
     }
 
-    public function login($username, $password) {
+    public function user_login($username, $password) {
         $query = "SELECT * FROM " . $this->table_name . " WHERE username = :username";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
-
+    
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             if (password_verify($password, $user['password'])) {
@@ -24,8 +24,9 @@ class UserModel {
         }
         return false;
     }
+    
 
-    public function signup($username, $password) {
+    public function user_signup($username, $password) {
         $query = "INSERT INTO " . $this->table_name . " (username, password) VALUES (:username, :password)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);

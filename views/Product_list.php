@@ -1,4 +1,3 @@
-<!-- product_list.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,12 +14,16 @@
             margin-top: 10px;
         }
     </style>
+    
 </head>
 <body>
-    <div class="container">
 
+    <div class="container">
         <?php if (isset($products) && $products instanceof PDOStatement && $products->rowCount() > 0): ?>
             <h3>Product List</h3>
+            <button>            
+                <a href="/E_Commercenew/E_Commerce/views/flow.html" class="button">Back</a>
+            </button>
 
             <table class="table table-bordered">
                 <thead>
@@ -40,13 +43,13 @@
                             <td><?php echo htmlspecialchars($row['name']); ?></td>
                             <td><?php echo htmlspecialchars($row['price']); ?></td>
                             <td><?php echo htmlspecialchars($row['quantity']); ?></td>
-                            <td><img src="../E_Commerce/<?php echo htmlspecialchars($row['image']); ?>" alt="Product Image" width="100"></td>
+                            <td><img src="/E_Commercenew/E_Commerce/<?php echo htmlspecialchars($row['image']); ?>" alt="Product Image" width="100"></td>
                             <td>
                                 <!-- Update Button -->
                                 <button class="btn btn-warning btn-sm" onclick="showUpdateForm(<?php echo htmlspecialchars($row['id']); ?>, '<?php echo htmlspecialchars($row['name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['quantity']); ?>, '<?php echo htmlspecialchars($row['image']); ?>')">Update</button>
                                 
                                 <!-- Delete Button -->
-                                <form action="/E_Commerce/routes.php?action=delete_product" method="post" style="display:inline;">
+                                <form action="/E_Commercenew/E_Commerce/routes.php?action=delete_product" method="post" style="display:inline;">
                                     <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 </form>
@@ -66,7 +69,7 @@
                             <h4 class="modal-title">Update Product</h4>
                         </div>
                         <div class="modal-body">
-                            <form id="updateProductForm" action="/E_Commerce/routes.php?action=update_product" method="post" enctype="multipart/form-data">
+                            <form id="updateProductForm" action=/E_Commercenew/E_Commerce/routes.php?action=update_product method="post" enctype="multipart/form-data">
                                 <input type="hidden" id="update_id" name="id">
                                 <div class="form-group">
                                     <label for="update_name">Name:</label>

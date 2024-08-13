@@ -2,8 +2,8 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require_once '../E_Commerce/models/UserModel.php';
-require_once '../E_Commerce/models/AdminModel.php';
+require_once '/var/www/html/E_Commercenew/E_Commerce/models/UserModel.php';
+require_once '/var/www/html/E_Commercenew/E_Commerce/models/AdminModel.php';
 
 class AuthController {
     private $userModel;
@@ -20,17 +20,17 @@ class AuthController {
             $password = $_POST['password'];
             
             if ($this->adminModel->login($username, $password)) {
-                header('Location: /E_Commerce/views/admin_dashboard.php');
+                header('Location: /E_Commercenew/E_Commerce/views/flow.html');
                 exit();
             } elseif ($this->adminModel->login($username, $password)) {
-                header('Location: /E_Commerce/views/product_list.php');
+                header('Location: /var/www/html/E_Commercenew/E_Commerce/views/product_list.php');
                 exit();
             } else {
                 $error = "Invalid username or password.";
-                include '../E_Commerce/views/login.php';
+                include '/var/www/html/E_Commercenew/E_Commerce/views/login.php';
             }
         } else {
-            include '../E_Commerce/views/login.php';
+            include '/var/www/html/E_Commercenew/E_Commerce/views/login.php';
         }
     }
 public function signup() {
@@ -40,15 +40,15 @@ public function signup() {
 
         if ($this->adminModel->signup($username, $password)) {
             echo "Signup successful! Redirecting...";
-            header('Location: /E_Commerce/views/login.php');
+            header('Location: /E_Commercenew/E_Commerce/views/login.php');
             exit();
         } else {
             echo "Signup failed! Please try again.";
             $error = "Signup failed. Please try again.";
-            include '../E_Commerce/views/signup.php';
+            include '/var/www/html/E_Commercenew/E_Commerce/views/signup.php';
         }
     } else {
-        include '../E_Commerce/views/signup.php';
+        include '/var/www/html/E_Commercenew/E_Commerce/views/signup.php';
     }
 }
 
