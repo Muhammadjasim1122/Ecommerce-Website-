@@ -115,25 +115,31 @@ class UserController {
     }
     public function deleteFromCart() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $product_id = $_POST['product_id'];
+            $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
+    
+            if ($product_id === null) {
+                echo json_encode(['success' => false, 'message' => 'Product ID is missing.']);
+                exit();
+            }
             
+            // Sanitize input
+            $product_id = htmlspecialchars($product_id, ENT_QUOTES, 'UTF-8');
+    
             // Attempt to delete item from cart
             $success = $this->quoteModel->deleteFromCart($product_id);
         
             if ($success) {
-                // Send JSON response indicating success
                 echo json_encode(['success' => true]);
             } else {
-                // Send JSON response indicating failure
                 echo json_encode(['success' => false, 'message' => 'Unable to delete item from cart.']);
             }
             exit();
         } else {
-            // Handle invalid request
             echo json_encode(['success' => false, 'message' => 'Invalid request.']);
             exit();
-        }  
+        }
     }
+    
     
     
 }

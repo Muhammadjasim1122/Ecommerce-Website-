@@ -43,6 +43,14 @@ CREATE TABLE quote (
     image VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE product_categories (
+    product_id INT,
+    category_id INT,
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (category_id) REFERENCES categories(id),
+);
 ALTER TABLE orders
 ADD COLUMN city VARCHAR(255) NOT NULL AFTER total;
 

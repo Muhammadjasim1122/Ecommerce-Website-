@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 require_once '/var/www/html/E_Commercenew/E_Commerce/models/CategoryModel.php';
 require_once '/var/www/html/E_Commercenew/E_Commerce/models/ProductModel.php';
 
@@ -25,4 +25,4 @@ class CatProductController {
         }
     }
 }
-?>
+?> -->
