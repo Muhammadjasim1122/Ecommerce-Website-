@@ -1,10 +1,10 @@
-<?php
-require_once '/var/www/html/E_Commercenew/E_Commerce/models/CategoryModel.php';
+    <?php
+    require_once '/var/www/html/E_Commercenew/E_Commerce/models/CategoryModel.php';
 
 
-class CategoryController {
+    class CategoryController {
     private $categoryModel;
-    
+
 
     public function __construct($pdo) {
         $this->categoryModel = new Category($pdo);
@@ -33,7 +33,7 @@ class CategoryController {
         return $this->categoryModel->getCategories();
     }
 
-}
+    }
 
 
-?>
+    ?>

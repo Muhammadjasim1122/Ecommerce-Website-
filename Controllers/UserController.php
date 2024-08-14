@@ -30,35 +30,34 @@ class UserController {
         // Pass the products data to the view
         include '/var/www/html/E_Commercenew/E_Commerce/views/landing_page.php';
     }
-    // public function addToCart() {
-    //     header('Content-Type: application/json');
-    //     ini_set('display_errors', 1);
-    //     error_reporting(E_ALL);
+    public function addToCart() {
+        header('Content-Type: application/json');
+        ini_set('display_errors', 1);
+        error_reporting(E_ALL);
     
-    //     $product_id = $_POST['product_id'];
-    //     $quantity = $_POST['quantity'];
+        $product_id = $_POST['product_id'];
+        $quantity = $_POST['quantity'];
     
-    //     // Fetch product details
-    //     $product = $this->productModel->getProductById($product_id);
+        // Fetch product details
+        $product = $this->productModel->getProductById($product_id);
     
-    //     if ($product) {
-    //         $name = $product['name'];
-    //         $price = $product['price'];
-    //         $image = $product['image'];
+        if ($product) {
+            $name = $product['name'];
+            $price = $product['price'];
+            $image = $product['image'];
     
-    //         $success = $this->quoteModel->addToCart($product_id, $name, $price, $quantity, $image);    
-    //         if ($success) {
-    //             return json_encode(["status" => "success"]);
-                
-    //         } else {
-    //             return json_encode(["status" => "false"]);
-    //         }
-    //     } else {
-    //         return json_encode(["message" => "Product not found."]);
-    //     }
-    //     return;
-    // }
-   
+            $success = $this->quoteModel->addToCart($product_id, $name, $price, $quantity, $image);  
+            if ($success === "true") {
+                return json_encode(["status" => "success"]);
+            } else {
+                return json_encode(["status" => "false"]);
+            }
+        } else {
+            return json_encode(["message" => "Product not found."]);
+        }
+    }
+    
+
     public function viewCart() {
         $quotes = $this->quoteModel->getCartContents();
 

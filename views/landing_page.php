@@ -7,7 +7,7 @@
 <link href="/E_Commercenew/E_Commerce/public/css/main.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="/E_Commercenew/E_Commerce/public/js/main.js"></script>
+<script src="/E_Commercenew/E_Commerce/public/js/addcart.js"></script>
 <script src="/E_Commercenew/E_Commerce/public/js/view_cart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -46,7 +46,7 @@
 
 
     <?php if (isset($products) && $products instanceof PDOStatement && $products->rowCount() > 0): ?>
-        <h3>Landing page</h3>
+        <h3>ALL Products Categories</h3>
         <div class="row">
             <?php while ($row = $products->fetch(PDO::FETCH_ASSOC)): ?>
                 <div class="col-md-4">

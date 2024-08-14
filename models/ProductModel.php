@@ -10,17 +10,17 @@ class ProductModel {
         $this->conn = $db;
     }
 
-    public function addProduct($product_id, $name,$category_id,$price, $quantities, $image) {
+    public function addProduct($name,$category_id,$price, $quantities, $image) {
         // Check if the product ID already exists
         if ($this->isProductIdExists($product_id)) {
             return false; // Product ID already exists
         }
 
-        $query = "INSERT INTO " . $this->table_name . " (id, name,category_id, price, quantity, image) VALUES (:product_id, :name, :category_id , :price, :quantities,  :image)";
+        $query = "INSERT INTO " . $this->table_name . " (name,category_id, price, quantity, image) VALUES (:name, :category_id , :price, :quantities,  :image)";
         $stmt = $this->conn->prepare($query);
 
         // Bind parameters
-        $stmt->bindParam(':product_id', $product_id);
+        // $stmt->bindParam(':product_id', $product_id);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':category_id', $category_id);
         $stmt->bindParam(':price', $price);

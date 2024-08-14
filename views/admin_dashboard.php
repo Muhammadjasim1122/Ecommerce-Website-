@@ -55,10 +55,10 @@
         <!-- <button><a href="/E_Commercenew/E_Commerce/views/Add_category.php">Category</a> 
            </button> -->
     <form method="post" action="/E_Commercenew/E_Commerce/routes.php?action=add_product" enctype="multipart/form-data">
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="product_id">Product ID:</label>
             <input type="text" class="form-control" id="product_id" name="product_id" required>
-        </div>
+        </div> -->
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" name="name" required>

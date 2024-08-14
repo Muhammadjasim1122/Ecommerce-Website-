@@ -34,9 +34,10 @@ class AdminController {
         move_uploaded_file($_FILES['image']['tmp_name'], $target);
 
 
-        if ($this->productModel->isProductIdExists($product_id)) {
-            $_SESSION['message'] = "Product ID already exists!";
-        } else if ($this->productModel->addProduct($product_id, $name, $category_id,$price, $quantities, $image)) {
+        // if ($this->productModel->isProductIdExists($product_id)) {
+        //     $_SESSION['message'] = "Product ID already exists!";
+        // } 
+        if ($this->productModel->addProduct($name, $category_id,$price, $quantities, $image)) {
             $_SESSION['message'] = "Product added successfully!";
         } else {
             $_SESSION['message'] = "Failed to add product.";

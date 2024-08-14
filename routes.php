@@ -71,12 +71,12 @@ switch ($action) {
         }
         break;
 
-    // case 'add_to_cart':
-    //     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    //     $controller = new UserController($db);
-    //     return $controller->addToCart();
-    //     }
-    //     break;
+    case 'add_to_cart':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $controller = new UserController($db);
+        return $controller->addToCart();
+        }
+        break;
         // case 'show_update_form': 
         //         $controller = new AdminController($db);
         //         $controller->showUpdateForm();
