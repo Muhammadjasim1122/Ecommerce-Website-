@@ -15,33 +15,33 @@
 
 </head>
 <body>
-<nav class="navbar navbar-default">
-<div class="container">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#">WATCH'S STORE</a>
-    </div>
+            <nav class="navbar navbar-default">
+            <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WATCH'S STORE</a>
+            </div>
 
-    <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="/E_Commercenew/E_Commerce/routes.php?action=user_login">Logout</a></li>
-            <li>
-                <a href="/E_Commercenew/E_Commerce/routes.php?action=view_cart">
-                    <span class="glyphicon glyphicon-shopping-cart"></span>
-                    <span id="cart-counter" class="badge">0</span>
-                </a>
-            </li>
-            <select id="categorySelect" onchange="location = this.value;">
-<option value="" disabled selected>Select a category</option>
-<?php foreach ($categories as $category): ?>
-    <option value="/E_Commercenew/E_Commerce/routes.php?action=view_category&categoryId=<?php echo urlencode($category['id']); ?>">
-        <?php echo htmlspecialchars($category['name']); ?>
-    </option>
-<?php endforeach; ?>
-</select>
-        </ul>
-    </div>
-</div>
-</nav>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/E_Commercenew/E_Commerce/routes.php?action=user_login">Logout</a></li>
+                    <li>
+                        <a href="/E_Commercenew/E_Commerce/routes.php?action=view_cart">
+                            <span class="glyphicon glyphicon-shopping-cart"></span>
+                            <span id="cart-counter" class="badge">0</span>
+                        </a>
+                    </li>
+                    <select id="categorySelect" onchange="location = this.value;">
+            <option value="" disabled selected>Select a category</option>
+                    <?php foreach ($categories as $category): ?>
+                    <option value="/E_Commercenew/E_Commerce/routes.php?action=view_category&categoryId=<?php echo urlencode($category['id']); ?>">
+                        <?php echo htmlspecialchars($category['name']); ?>
+                    </option>
+                    <?php endforeach; ?>
+            </select>
+                </ul>
+            </div>
+            </div>
+            </nav>
 
 
 

@@ -10,25 +10,60 @@ class ProductModel {
         $this->conn = $db;
     }
 
-    public function addProduct($name,$category_id,$price, $quantities, $image) {
-        // Check if the product ID already exists
-        if ($this->isProductIdExists($product_id)) {
-            return false; // Product ID already exists
-        }
-
-        $query = "INSERT INTO " . $this->table_name . " (name,category_id, price, quantity, image) VALUES (:name, :category_id , :price, :quantities,  :image)";
-        $stmt = $this->conn->prepare($query);
-
-        // Bind parameters
-        // $stmt->bindParam(':product_id', $product_id);
+    public function addProduct($name, $price, $quantities, $image, $category_ids) {
+        // Insert product into the products table
+       
+        $checkQuery = "SELECT id, quantity FROM " . $this->table_name . " WHERE name = :name";
+        $stmt = $this->conn->prepare($checkQuery);
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':category_id', $category_id);
+        $stmt->execute();
+       
+       
+        $existingItem = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if($existingitem)
+        {
+            $newquantity = $existingitem['quantity'] + $quantities;
+            $updateQuary = "UPDATE" . $this->table_name . "SET quantity = :quantity WHERE product_id = :prdouct_id";
+            $stmt->bindParam(':quantity', $newQuantity);
+            $stmt->bindParam(':product_id', $product_id);
+        }
+       
+       else
+       {
+
+         $query = "INSERT INTO " . $this->table_name . " (name, price, quantity, image) VALUES (:name, :price, :quantities, :image)";
+        $stmt = $this->conn->prepare($query);
+    
+        $stmt->bindParam(':name', $name);
         $stmt->bindParam(':price', $price);
         $stmt->bindParam(':quantities', $quantities);
         $stmt->bindParam(':image', $image);
+    
+        if (!$stmt->execute()) {
+            return false;
+        }
+    
 
-        return $stmt->execute();
+      
+        // Get the last inserted product ID
+        $product_id = $this->conn->lastInsertId();
+    
+        // Insert categories into the product_categories table
+        foreach ($category_ids as $category_id) {
+            $query = "INSERT INTO product_categories (product_id, category_id) VALUES (:product_id, :category_id)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':product_id', $product_id);
+            $stmt->bindParam(':category_id', $category_id);
+            if (!$stmt->execute()) {
+                return false;
+            }
+        }
+    
+        return true;
     }
+}
+    
     public function getAllProducts() {
         $query = "SELECT * FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);
@@ -48,11 +83,41 @@ class ProductModel {
         return $stmt->rowCount() > 0;
     }
     public function deleteProduct($product_id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE id = :product_id";
+        // Start a transaction
+        $this->conn->beginTransaction();
+    
+        // Delete related categories
+        $query = "DELETE FROM product_categories WHERE product_id = :product_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':product_id', $product_id);
-        return $stmt->execute();
+        $result1 = $stmt->execute();
+    
+        // Check if the deletion of related categories was successful
+        if ($result1) {
+            // Delete the product
+            $query = "DELETE FROM products WHERE id = :product_id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':product_id', $product_id);
+            $result2 = $stmt->execute();
+    
+            // Check if the product deletion was successful
+            if ($result2) {
+                // Commit the transaction if everything was successful
+                $this->conn->commit();
+                return true;
+            } else {
+                // Roll back the transaction if product deletion failed
+                $this->conn->rollBack();
+                return false;
+            }
+        } else {
+            // Roll back the transaction if category deletion failed
+            $this->conn->rollBack();
+            return false;
+        }
     }
+        
+    
     public function updateProduct($product_id, $name, $price, $quantity, $image) {
         $query = "UPDATE " . $this->table_name . " SET name = :name, price = :price, quantity = :quantity, image = :image WHERE id = :product_id";
         $stmt = $this->conn->prepare($query);
@@ -86,24 +151,22 @@ class ProductModel {
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
-    }
-    // public function getCategoryIdByName($category_name) {
-    //     $query = "SELECT id FROM categories WHERE name = :name";
-    //     $stmt = $this->conn->prepare($query);
-    //     $stmt->bindParam(':name', $category_name);
-    //     $stmt->execute();
-        
-    //     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    //     return $result ? $result['id'] : false;
-    // }
+    }  
+   public function getProductsByCategory($categoryId) {
+    // Query to get product IDs from product_categories table for the given category
+    $query = "
+        SELECT p.*
+        FROM products p
+        INNER JOIN product_categories pc ON p.id = pc.product_id
+        WHERE pc.category_id = :categoryId
+    ";
     
-    public function getProductsByCategory($categoryId) {
-        $query = "SELECT * FROM products WHERE category_id = :categoryId";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':categoryId', $categoryId);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all results
-    }
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':categoryId', $categoryId);
+    $stmt->execute();
+    
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all results
+}
     
 }
 

@@ -59,32 +59,35 @@
             <label for="product_id">Product ID:</label>
             <input type="text" class="form-control" id="product_id" name="product_id" required>
         </div> -->
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-            <label for="category_id">Category:</label>
-            <select class="form-control" id="category_id" name="category_id" required>
-                <?php foreach ($categories as $category): ?>
-                    <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="price">Price:</label>
-            <input type="text" class="form-control" id="price" name="price" required>
-        </div>
-        <div class="form-group">
-            <label for="quantities">Quantities:</label>
-            <input type="number" class="form-control" id="quantities" name="quantities" required>
-        </div>
-        <div class="form-group">
-            <label for="image">Image:</label>
-            <input type="file" class="form-control" id="image" name="image" accept="image/*">
-        </div>
-        <button type="submit" class="btn btn-primary">Add Product</button>
-    </form>
+        <form action="/E_Commercenew/E_Commerce/routes.php?action=add_product" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="category_ids">Categories:</label>
+        <select class="form-control" id="category_ids" name="category_ids[]" multiple required>
+            <?php foreach ($categories as $category): ?>
+                <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
+            <?php endforeach; ?>
+        </select>
+        <small class="form-text text-muted">Hold down the Ctrl (or Command) key to select multiple options.</small>
+    </div>
+    <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="text" class="form-control" id="price" name="price" required>
+    </div>
+    <div class="form-group">
+        <label for="quantities">Quantities:</label>
+        <input type="number" class="form-control" id="quantities" name="quantities" required>
+    </div>
+    <div class="form-group">
+        <label for="image">Image:</label>
+        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary">Add Product</button>
+</form>
+
 
     <!-- Button Group -->
     <!-- <div class="btn-group" role="group">

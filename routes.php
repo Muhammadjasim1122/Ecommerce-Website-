@@ -77,10 +77,6 @@ switch ($action) {
         return $controller->addToCart();
         }
         break;
-        // case 'show_update_form': 
-        //         $controller = new AdminController($db);
-        //         $controller->showUpdateForm();
-        //         break;
     case 'update_product':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $controller = new AdminController($db);

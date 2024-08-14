@@ -20,32 +20,25 @@ class AdminController {
     }
 
     public function addProduct() {
-        // $product_id = $_POST['product_id'];
         $name = $_POST['name'];
-
-        $category_id = $_POST['category_id'];
         $price = $_POST['price'];
-        // echo "post data <pre>";
-        // print_r($_POST);
-        // die();
         $quantities = $_POST['quantities'];
         $image = $_FILES['image']['name'];
+        $category_ids = $_POST['category_ids']; // This will be an array
+    
         $target = "/var/www/html/E_Commercenew/E_Commerce/" . basename($image);
         move_uploaded_file($_FILES['image']['tmp_name'], $target);
-
-
-        // if ($this->productModel->isProductIdExists($product_id)) {
-        //     $_SESSION['message'] = "Product ID already exists!";
-        // } 
-        if ($this->productModel->addProduct($name, $category_id,$price, $quantities, $image)) {
+    
+        if ($this->productModel->addProduct($name, $price, $quantities, $image, $category_ids)) {
             $_SESSION['message'] = "Product added successfully!";
         } else {
             $_SESSION['message'] = "Failed to add product.";
         }
-        
+    
         header("Location:/E_Commercenew/E_Commerce/routes.php?action=admin_dashboard");
         exit();
     }
+    
     public function viewAllProducts() {
         $products = $this->productModel->getAllProducts();
         
