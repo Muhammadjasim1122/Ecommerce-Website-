@@ -1,0 +1,26 @@
+/* public/css/main.css */
+.navbar {
+    margin-bottom: 20px;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.product-image {
+    width: 100px;
+    height: auto;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.btn-add-to-cart {
+    margin-top: 10px;
+}

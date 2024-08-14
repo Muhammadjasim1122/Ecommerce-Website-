@@ -1,0 +1,28 @@
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            margin-bottom: 20px; /* Space between navbar and buttons */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center; /* Center buttons horizontally */
+            gap: 10px; /* Space between buttons */
+            margin-top: 20px; /* Space above buttons if needed */
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none; /* Remove underline */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
