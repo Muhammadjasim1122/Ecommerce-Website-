@@ -26,7 +26,7 @@
             <button type="submit" class="btn btn-primary">Signup</button>
         </form>
         <br>
-        <a href="/E_Commercenew/E_Commerce/routes.php?action=">Already have an account? Login here.</a>
+        <a href="/E_Commercenew/E_Commerce/views/user_login.php">Already have an account? Login here.</a>
     </div>
 </body>
 </html>

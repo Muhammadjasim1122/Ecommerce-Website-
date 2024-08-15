@@ -2,8 +2,9 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+// require_once '/var/www/html/E_Commercenew/E_Commerce/config/database.php'; // Adjust path if necessary
 class AdminModel {
-    private $conn;
+    public $conn;
     private $table_name = "admins"; // Updated to 'users'
 
     public function __construct($db) {

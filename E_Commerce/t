@@ -1,68 +1,0 @@
-[1mdiff --git a/public/js/view_cart.js b/public/js/view_cart.js[m
-[1mindex 3f31d81..a3f4286 100644[m
-[1m--- a/public/js/view_cart.js[m
-[1m+++ b/public/js/view_cart.js[m
-[36m@@ -1,36 +1,29 @@[m
-[31m-// $(document).ready(function() {[m
-[31m-//     // Handle click on the basket icon[m
-[31m-//     $('#view-cart').click(function(event) {[m
-[31m-//         event.preventDefault(); // Prevent the default action[m
-[32m+[m[32m$(document).ready(function() {[m[41m[m
-[32m+[m[32m    $('form').on('submit', function(event) {[m[41m[m
-[32m+[m[32m        event.preventDefault(); // Prevent the form from submitting the traditional way[m[41m[m
- [m
-[31m-//         // Make an AJAX request to fetch the cart data[m
-[31m-//         $.ajax({[m
-[31m-//             type: 'GET',[m
-[31m-//             url: '/E_Commercenew/E_Commerce/routes.php?action=view_cart',[m
-[31m-//             dataType: 'json',[m
-[31m-//             success: function(response) {[m
-[31m-//                 if (response && response.cartItems) {[m
-[31m-//                     // Update cart counter[m
-[31m-//                     $('#cart-counter').text(response.cartItems.length);[m
-[32m+[m[32m        var formData = new FormData(this); // Create a FormData object from the form[m[41m[m
- [m
-[31m-//                     // Display cart items[m
-[31m-//                     var cartItemsHtml = '<h3>Cart Items</h3><ul>';[m
-[31m-//                     response.cartItems.forEach(function(item) {[m
-[31m-//                         cartItemsHtml += '<li>' +[m
-[31m-//                             'Product: ' + item.name + ' - ' +[m
-[31m-//                             'Price: $' + item.price + ' - ' +[m
-[31m-//                             'Quantity: ' + item.quantity +[m
-[31m-//                             '</li>';[m
-[31m-//                     });[m
-[31m-//                     cartItemsHtml += '</ul>';[m
-[31m-//                     $('#cart-items-container').html(cartItemsHtml).show();[m
-[31m-//                 } else {[m
-[31m-//                     console.error('Unexpected response format:', response);[m
-[31m-//                 }[m
-[31m-//             },[m
-[31m-//             error: function(xhr, status, error) {[m
-[31m-//                 console.error('AJAX Error:', status, error);[m
-[31m-//             }[m
-[31m-//         });[m
-[31m-//     });[m
-[31m-// });[m
-[32m+[m[32m        $.ajax({[m[41m[m
-[32m+[m[32m            url: '/E_Commercenew/E_Commerce/routes.php?action=add_product', // Your API endpoint[m[41m[m
-[32m+[m[32m            type: 'POST',[m[41m[m
-[32m+[m[32m            data: formData,[m[41m[m
-[32m+[m[32m            contentType: false,[m[41m[m
-[32m+[m[32m            processData: false,[m[41m[m
-[32m+[m[32m            success: function(response) {[m[41m[m
-[32m+[m[32m                var data = JSON.parse(response);[m[41m[m
-[32m+[m[41m                [m
-[32m+[m[32m                if (data.status === 'success') {[m[41m[m
-[32m+[m[32m                    // Update the cart counter[m[41m[m
-[32m+[m[32m                    $('#cart-counter').text(data.cartCount);[m[41m[m
-[32m+[m[32m                    toastr.success('Product added to cart!');[m[41m[m
-[32m+[m[32m                } else {[m[41m[m
-[32m+[m[32m                    toastr.error(data.message);[m[41m[m
-[32m+[m[32m                }[m[41m[m
-[32m+[m[32m            },[m[41m[m
-[32m+[m[32m            error: function() {[m[41m[m
-[32m+[m[32m                toastr.error('An error occurred. Please try again.');[m[41m[m
-[32m+[m[32m            }[m[41m[m
-[32m+[m[32m        });[m[41m[m
-[32m+[m[32m    });[m[41m[m
-[32m+[m[32m});[m[41m[m

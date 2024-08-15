@@ -23,20 +23,14 @@ class UserController {
 
     }
     
-    public function AllProducts() {
-        $products = $this->productModel->viewAll();
-        $categories = $this->productModel->viewAllcategories();
-
-        // Pass the products data to the view
-        include '/var/www/html/E_Commercenew/E_Commerce/views/landing_page.php';
-    }
+ 
     public function addToCart() {
         header('Content-Type: application/json');
         ini_set('display_errors', 1);
         error_reporting(E_ALL);
     
-        $product_id = $_POST['product_id'];
-        $quantity = $_POST['quantity'];
+        $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
+        $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
     
         // Fetch product details
         $product = $this->productModel->getProductById($product_id);
@@ -46,22 +40,35 @@ class UserController {
             $price = $product['price'];
             $image = $product['image'];
     
-            $success = $this->quoteModel->addToCart($product_id, $name, $price, $quantity, $image);  
-            if ($success === "true") {
-                return json_encode(["status" => "success"]);
+            // Assuming addToCart method now requires 5 parameters
+            $success = $this->quoteModel->addToCart($product_id, $name, $price, $quantity, $image);
+    
+            // Get updated cart count
+            $cartCount = $this->quoteModel->getCartCount();
+    
+            if ($success) {
+                echo json_encode([
+                    "status" => "success",
+                    "message" => "Product added to cart successfully.",
+                    "cartCount" => $cartCount
+                ]);
             } else {
-                return json_encode(["status" => "false"]);
+                echo json_encode([
+                    "status" => "error",
+                    "message" => "Failed to add product to cart."
+                ]);
             }
         } else {
-            return json_encode(["message" => "Product not found."]);
+            echo json_encode(["status" => "error", "message" => "Product not found."]);
         }
+        exit();
     }
     
+
 
     public function viewCart() {
         $quotes = $this->quoteModel->getCartContents();
 
-        
         // Debugging output
         if (!$quotes) {
             error_log('No quotes returned from model.');
@@ -114,21 +121,23 @@ class UserController {
         }
     }
     public function deleteFromCart() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
     
             if ($product_id === null) {
                 echo json_encode(['success' => false, 'message' => 'Product ID is missing.']);
                 exit();
             }
-            
+    
             // Sanitize input
             $product_id = htmlspecialchars($product_id, ENT_QUOTES, 'UTF-8');
     
             // Attempt to delete item from cart
             $success = $this->quoteModel->deleteFromCart($product_id);
-        
+            // $cartCount = $this->quoteModel->getCartCount();
+
             if ($success) {
+
                 echo json_encode(['success' => true]);
             } else {
                 echo json_encode(['success' => false, 'message' => 'Unable to delete item from cart.']);
@@ -138,9 +147,7 @@ class UserController {
             echo json_encode(['success' => false, 'message' => 'Invalid request.']);
             exit();
         }
-    }
-    
-    
-    
+        
+    }  
 }
 ?>

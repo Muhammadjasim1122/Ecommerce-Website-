@@ -41,24 +41,8 @@
         unset($_SESSION['message']);
     endif;
     ?>
-
-    <!-- Add Category Form -->
-    <!-- <form method="post" action="/E_Commercenew/E_Commerce/routes.php?action=add_category">
-        <div class="form-group">
-            <label for="category_name">Category Name:</label>
-            <input type="text" class="form-control" id="category_name" name="category_name" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Add Category</button>
-    </form> -->
-
-    <!-- Product Form -->
-        <!-- <button><a href="/E_Commercenew/E_Commerce/views/Add_category.php">Category</a> 
-           </button> -->
     <form method="post" action="/E_Commercenew/E_Commerce/routes.php?action=add_product" enctype="multipart/form-data">
-        <!-- <div class="form-group">
-            <label for="product_id">Product ID:</label>
-            <input type="text" class="form-control" id="product_id" name="product_id" required>
-        </div> -->
+       
         <form action="/E_Commercenew/E_Commerce/routes.php?action=add_product" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="name">Name:</label>
@@ -87,13 +71,6 @@
     </div>
     <button type="submit" class="btn btn-primary">Add Product</button>
 </form>
-
-
-    <!-- Button Group -->
-    <!-- <div class="btn-group" role="group">
-        <a href="/E_Commercenew/E_Commerce/routes.php?action=view_all_products" class="btn btn-info">View All Products</a>
-        <a href="/E_Commercenew/E_Commerce/routes.php?action=view_orders" class="btn btn-warning">View Orders</a>
-    </div> -->
 </div>
 </body>
 </html>

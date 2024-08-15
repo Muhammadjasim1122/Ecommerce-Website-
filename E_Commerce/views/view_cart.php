@@ -34,10 +34,10 @@
                                 <p>Price: $<?php echo htmlspecialchars($row['price']); ?></p>
                                 <p>Quantity: <?php echo htmlspecialchars($row['quantity']); ?></p>
                                 <!-- Delete Button -->
-                                <form action="/E_Commercenew/E_Commerce/routes.php?action=delete_from_cart" method="POST" style="display:inline;">
-                                    <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($row['product_id']); ?>">
-                                    <button type="submit" class="btn-delete" id="btn_delete">Delete</button>
-                                </form>
+                                <form class="delete-form" style="display:inline;">
+    <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($row['product_id']); ?>">
+    <button type="button" class="btn-delete" data-product-id="<?php echo htmlspecialchars($row['product_id']); ?>">Delete</button>
+</form>
                             </div>
                         </div>
                     <?php endwhile; ?>

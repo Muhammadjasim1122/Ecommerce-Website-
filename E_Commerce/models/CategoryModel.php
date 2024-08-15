@@ -1,9 +1,11 @@
 <?php
+// require_once '/var/www/html/E_Commercenew/E_Commerce/config/database.php'; // Adjust path if necessary
+
 class Category {
     private $db;
 
-    public function __construct($pdo) {
-        $this->db = $pdo; // Corrected this line
+    public function __construct($db) {
+        $this->db = $db; // Corrected this line
     }
 
     public function getAllCategories() {

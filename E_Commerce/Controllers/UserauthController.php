@@ -23,18 +23,20 @@ class userAuthController {
             $password = $_POST['password'];
     
             if ($this->userModel->user_login($username, $password)) {
-                $products = $this->productModel->viewAll();
-                $categories = $this->productModel->viewAllcategories();
+                // $products = $this->productModel->viewAll();
+                // $categories = $this->productModel->viewAllcategories();
         
                 // Pass the products data to the view
-                include '/var/www/html/E_Commercenew/E_Commerce/views/landing_page.php';     
-                           exit();
+                // include '/var/www/html/E_Commercenew/E_Commerce/views/landing_page.php';     
+                    header ("location: /E_Commercenew/E_Commerce/routes.php?action=view_all");
+
+                exit();
             } else {
                 $error = "Invalid username or password.";
                 include '/var/www/html/E_Commercenew/E_Commerce/views/user_login.php';
             }
         } else {
-            include '/var/www/html/E_Commercenew/E_Commerce/views/user_login.php';
+            include '/var/www/html/E_Commercenew/E_Commerce/views/landing_page.php';
         }
     }
 public function user_signup() {

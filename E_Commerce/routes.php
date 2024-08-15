@@ -40,6 +40,7 @@ switch ($action) {
         break;
 
     case 'user_login':
+      
             $controller = new userAuthController($db);
             $controller->user_login();
             break;
@@ -90,8 +91,12 @@ switch ($action) {
         break;
 
     case 'view_all':
-        $controller = new UserController($db);
-        $controller->AllProducts();
+     
+        $products = (new productModel($db))->viewAll();
+        $categories = (new productModel($db))->viewAllcategories();
+
+        // Pass the products data to the view
+        include '/var/www/html/E_Commercenew/E_Commerce/views/landing_page.php';   
         break;
 
     case 'view_cart':
@@ -104,11 +109,10 @@ switch ($action) {
         $controller->checkout();
         break;
 
-    case 'delete_from_cart':
-        $controller = new UserController($db);
-
-        $controller->deleteFromCart();
-        break;
+        case 'delete_from_cart':
+            $controller = new UserController($db);
+            $controller->deleteFromCart();
+            break;
 
     case 'add_category':
         $name = $_POST['category_name'];

@@ -2,21 +2,22 @@ $(document).ready(function() {
     $('.btn-delete').on('click', function() {
         var button = $(this);
         var productId = button.data('product-id');
-        
+
         console.log('Deleting product ID:', productId); // Debugging line
-        
+
         $.ajax({
             url: '/E_Commercenew/E_Commerce/routes.php?action=delete_from_cart',
             type: 'POST',
             data: { product_id: productId },
             success: function(response) {
                 console.log('Response:', response); // Debugging line
-                
+
                 try {
                     var result = JSON.parse(response);
                     if (result.success) {
                         toastr.success('Product deleted successfully.');
-                        button.closest('.product-card').remove();
+                        button.closest('.delete-form').remove(); // Remove the form (and associated product) from the page
+                        $('#cart-count-value').text(result.cartCount); // Update cart count
                     } else {
                         toastr.error(result.message || 'Failed to delete product.');
                     }

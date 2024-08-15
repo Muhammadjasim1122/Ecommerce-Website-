@@ -24,11 +24,9 @@
             $stmt->bindParam(':product_id', $product_id);
     
             if ($stmt->execute()) {
-                return "true";
+                return true;
             } else {
-                $errorInfo = $stmt->errorInfo();
-                echo json_encode(["message" => "Failed to update quantity in cart. Error: " . $errorInfo[2]]);
-                exit();
+                return false;
             }
         } else {
             // Insert new item if product does not exist
@@ -41,14 +39,13 @@
             $stmt->bindParam(':image', $image);
     
             if ($stmt->execute()) {
-                return "true";
+                return true;
             } else {
-                $errorInfo = $stmt->errorInfo();
-                echo json_encode(["message" => "Failed to add item to cart. Error: " . $errorInfo[2]]);
-                exit();
+                return false;
             }
         }
     }
+    
     
 
     public function getCartContents() {
@@ -73,9 +70,16 @@
     // models/Quote.php
 
     public function deleteFromCart($product_id) {
-    $stmt = $this->conn->prepare('DELETE FROM quote WHERE product_id = :product_id');
-    return $stmt->execute(['product_id' => $product_id]);
+        $stmt = $this->conn->prepare('DELETE FROM quote WHERE product_id = :product_id');
+        return $stmt->execute(['product_id' => $product_id]);
     }
+    
+    public function getCartCount() {
+        $stmt = $this->conn->query('SELECT COUNT(*) AS count FROM quote');
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['count'];
+    }
+    
     
     }
     ?>

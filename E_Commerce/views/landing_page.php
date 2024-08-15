@@ -23,7 +23,7 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/E_Commercenew/E_Commerce/routes.php?action=user_login">Logout</a></li>
+                    <li><a href="/E_Commercenew/E_Commerce/views/user_login.php">Logout</a></li>
                     <li>
                         <a href="/E_Commercenew/E_Commerce/routes.php?action=view_cart">
                             <span class="glyphicon glyphicon-shopping-cart"></span>

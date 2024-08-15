@@ -6,6 +6,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="/E_Commercenew/E_Commerce/public/js/productlist.js"></script>
     <style>
         .container {
             margin-top: 20px;
@@ -84,11 +85,16 @@
                                     <input type="number" class="form-control" id="update_quantity" name="quantity" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="update_image">Image:</label>
-                                    <input type="file" class="form-control" id="update_image" name="image">
-                                </div>
+                        <label for="update_image">Image:</label>
+                        <div id="currentImageContainer">
+                            <!-- Current image will be displayed here -->
+                            <img id="currentImage" src="/E_Commercenew/E_Commerce" alt="Current Image" style="max-width: 200px; max-height: 200px;">
+                        </div>
+                        <input type="file" class="form-control" id="update_image" name="image">
+                    </div>        
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </form>
+                    
                         </div>
                     </div>
                 </div>
@@ -96,7 +102,7 @@
         <?php else: ?>
         <?php endif; ?> 
     </div>
-
+<!-- 
     <script>
         function showUpdateForm(id, name, price, quantity, image) {
             document.getElementById('update_id').value = id;
@@ -106,6 +112,6 @@
             document.getElementById('update_image').value = ""; // Clear the file input
             $('#updateFormModal').modal('show');
         }
-    </script>
+    </script> -->
 </body>
 </html>
