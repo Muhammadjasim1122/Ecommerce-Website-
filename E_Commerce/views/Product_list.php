@@ -7,6 +7,8 @@
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="/E_Commercenew/E_Commerce/public/js/productlist.js"></script>
+    <script src="/E_Commercenew/E_Commerce/public/js/deleteprofromlist.js"></script>
+
     <style>
         .container {
             margin-top: 20px;
@@ -50,10 +52,13 @@
                                 <button class="btn btn-warning btn-sm" onclick="showUpdateForm(<?php echo htmlspecialchars($row['id']); ?>, '<?php echo htmlspecialchars($row['name']); ?>', <?php echo htmlspecialchars($row['price']); ?>, <?php echo htmlspecialchars($row['quantity']); ?>, '<?php echo htmlspecialchars($row['image']); ?>')">Update</button>
                                 
                                 <!-- Delete Button -->
-                                <form action="/E_Commercenew/E_Commerce/routes.php?action=delete_product" method="post" style="display:inline;">
-                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
+                                <form id="deleteProductForm" action="/E_Commercenew/E_Commerce/routes.php?action=delete_product" method="post" style="display:inline;">
+    <input type="hidden" name="id" value="<?php echo htmlspecialchars($row['id']); ?>">
+    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete()">Delete</button>
+</form>
+
+
+
                             </td>
                         </tr>
                     <?php endwhile; ?>

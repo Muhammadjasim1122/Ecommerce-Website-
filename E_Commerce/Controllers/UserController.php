@@ -24,45 +24,44 @@ class UserController {
     }
     
  
-public function addToCart() {
-    header('Content-Type: application/json');
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
-
-    $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
-    $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
-
-    // Fetch product details
-    $product = $this->productModel->getProductById($product_id);
-
-    if ($product) {
-        $name = $product['name'];
-        $price = $product['price'];
-        $image = $product['image'];
-
-        // Assuming addToCart method now requires 5 parameters
-        $success = $this->quoteModel->addToCart($product_id, $name, $price, $quantity, $image);
-
-        // Get updated cart count
-        $cartCount = $this->quoteModel->getCartCount();
-
-        if ($success) {
-            echo json_encode([
-                "status" => "success",
-                "message" => "Product added to cart successfully.",
-                "cartCount" => $cartCount
-            ]);
+    public function addToCart() {
+        header('Content-Type: application/json');
+        ini_set('display_errors', 1);
+        error_reporting(E_ALL);
+    
+        $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
+        $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 1;
+    
+        $product = $this->productModel->getProductById($product_id);
+    
+        if ($product) {
+            $name = $product['name'];
+            $price = $product['price'];
+            $image = $product['image'];
+    
+            $success = $this->quoteModel->addToCart($product_id, $name, $price, $quantity, $image);
+    
+            // Get updated cart count
+            $cartCount = $this->quoteModel->getCartCount();
+    
+            if ($success) {
+                echo json_encode([
+                    "status" => "success",
+                    "message" => "Product added to cart successfully.",
+                    "cartCount" => $cartCount
+                ]);
+            } else {
+                echo json_encode([
+                    "status" => "false",
+                    "message" => "Failed to add product to cart."
+                ]);
+            }
         } else {
-            echo json_encode([
-                "status" => "false",
-                "message" => "Failed to add product to cart."
-            ]);
+            echo json_encode(["status" => "error", "message" => "Product not found."]);
         }
-    } else {
-        echo json_encode(["status" => "error", "message" => "Product not found."]);
+        exit();
     }
-    exit();
-}
+    
 
 
 public function viewCart() {
@@ -111,7 +110,6 @@ public function viewCart() {
                     echo "Error: Unable to create order.";
                 }
             } else {
-                // Handle case where $quotes is null
                 echo "Error: Unable to fetch cart contents.";
             }
         } else {
