@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 class userModel {
     private $conn;
-    private $table_name = "users"; // Updated to 'users'
+    private $table_name = "users"; 
 
     public function __construct($db) {
         $this->conn = $db;

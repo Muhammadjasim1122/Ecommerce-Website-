@@ -8,8 +8,8 @@
     }
     public function addToCart($product_id, $name, $price, $quantity, $image) {
         // Check if product already exists in the cart
-        $checkQuery = "SELECT id, quantity FROM " . $this->table_name . " WHERE product_id = :product_id AND order_id = NULL";
-
+        $checkQuery = "SELECT id, quantity FROM " . $this->table_name . " WHERE product_id = :product_id AND order_id IS NULL";
+    
         $stmt = $this->conn->prepare($checkQuery);
         $stmt->bindParam(':product_id', $product_id);
         $stmt->execute();
@@ -19,16 +19,12 @@
         if ($existingItem) {
             // Update the quantity if product exists
             $newQuantity = $existingItem['quantity'] + $quantity;
-            $updateQuery = "UPDATE " . $this->table_name . " SET quantity = :quantity WHERE product_id = :product_id";
+            $updateQuery = "UPDATE " . $this->table_name . " SET quantity = :quantity WHERE product_id = :product_id AND order_id IS NULL";
             $stmt = $this->conn->prepare($updateQuery);
             $stmt->bindParam(':quantity', $newQuantity);
             $stmt->bindParam(':product_id', $product_id);
-    
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
+        
+            return $stmt->execute();
         } else {
             // Insert new item if product does not exist
             $query = "INSERT INTO " . $this->table_name . " (product_id, name, price, quantity, image) VALUES (:product_id, :name, :price, :quantity, :image)";
@@ -38,12 +34,8 @@
             $stmt->bindParam(':price', $price);
             $stmt->bindParam(':quantity', $quantity);
             $stmt->bindParam(':image', $image);
-    
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
+        
+            return $stmt->execute();
         }
     }
     

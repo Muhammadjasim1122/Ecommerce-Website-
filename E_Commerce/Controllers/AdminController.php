@@ -31,6 +31,8 @@ class AdminController {
     
         if ($this->productModel->addProduct($name, $price, $quantities, $image, $category_ids)) {
             $_SESSION['message'] = "Product added successfully!";
+
+
         } else {
             $_SESSION['message'] = "Failed to add product.";
         }
@@ -82,7 +84,10 @@ class AdminController {
         }
     
         if ($this->productModel->updateProduct($product_id, $name, $price, $quantity, $image)) {
+
             $_SESSION['message'] = "Product updated successfully!";
+            unset($_SESSION['message']); // Clear the message after displaying
+
         } else {
             $_SESSION['message'] = "Failed to update product.";
         }
@@ -92,17 +97,18 @@ class AdminController {
     }
    
    
-   
     public function deleteProduct() {
         $product_id = $_POST['id'];
         if ($this->productModel->deleteProduct($product_id)) {
             $_SESSION['message'] = "Product deleted successfully!";
+            unset($_SESSION['message']); // Clear the message after displaying
         } else {
             $_SESSION['message'] = "Failed to delete product!";
         }
         header("Location:/E_Commercenew/E_Commerce/routes.php?action=view_all_products");
         exit();
     }
+    
   
    
 }
