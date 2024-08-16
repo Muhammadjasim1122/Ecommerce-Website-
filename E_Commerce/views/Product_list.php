@@ -102,16 +102,5 @@
         <?php else: ?>
         <?php endif; ?> 
     </div>
-<!-- 
-    <script>
-        function showUpdateForm(id, name, price, quantity, image) {
-            document.getElementById('update_id').value = id;
-            document.getElementById('update_name').value = name;
-            document.getElementById('update_price').value = price;
-            document.getElementById('update_quantity').value = quantity;
-            document.getElementById('update_image').value = ""; // Clear the file input
-            $('#updateFormModal').modal('show');
-        }
-    </script> -->
 </body>
 </html>

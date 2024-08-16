@@ -8,7 +8,8 @@
     }
     public function addToCart($product_id, $name, $price, $quantity, $image) {
         // Check if product already exists in the cart
-        $checkQuery = "SELECT id, quantity FROM " . $this->table_name . " WHERE product_id = :product_id";
+        $checkQuery = "SELECT id, quantity FROM " . $this->table_name . " WHERE product_id = :product_id AND order_id = NULL";
+
         $stmt = $this->conn->prepare($checkQuery);
         $stmt->bindParam(':product_id', $product_id);
         $stmt->execute();
@@ -49,7 +50,7 @@
     
 
     public function getCartContents() {
-        $query = "SELECT * FROM " . $this->table_name;
+        $query = "SELECT * FROM " . $this->table_name . " WHERE order_id IS NULL";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         
@@ -70,15 +71,24 @@
     // models/Quote.php
 
     public function deleteFromCart($product_id) {
-        $stmt = $this->conn->prepare('DELETE FROM quote WHERE product_id = :product_id');
+        $stmt = $this->conn->prepare('DELETE FROM quote WHERE product_id = :product_id AND order_id IS NULL');
         return $stmt->execute(['product_id' => $product_id]);
     }
+
+    
     
     public function getCartCount() {
         $stmt = $this->conn->query('SELECT COUNT(*) AS count FROM quote');
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result['count'];
     }
+    public function updateOrderIdForCartItems($order_id) {
+        $query = "UPDATE " . $this->table_name . " SET order_id = :order_id WHERE order_id IS NULL";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':order_id', $order_id);
+        return $stmt->execute();
+    }
+    
     
     
     }

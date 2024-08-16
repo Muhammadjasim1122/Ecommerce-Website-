@@ -5,7 +5,7 @@ function addToCart(product_id) {
         data: { product_id: product_id, quantity: 1 },
         success: function(response) {
             try {
-                var result = JSON.parse(response);
+                // var result = JSON.parse(response);
                 if (result.status === 'success') {
                     alert(result.message);
 
